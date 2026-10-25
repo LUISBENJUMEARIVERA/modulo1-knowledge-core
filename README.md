@@ -17,13 +17,13 @@ Sistema de ingesta de datos resiliente, modelado semántico y arquitectura Q&A a
 
 ---
 
-## 🚀 Puesta en Marcha
 
-### Prerrequisitos
-* Python 3.12+ administrado con **`uv` (Astral)**.
-* **Ollama** con el modelo `llama3.2` descargado (`ollama pull llama3.2`).
+## ⚡ Inicio Rápido (One-Liner / Copiar y Pegar)
 
-### 1. Instalación de Dependencias
-```bash
-uv sync
-uv run playwright install chromium
+Copia y pega el siguiente bloque en tu terminal para clonar, configurar todo automáticamente y abrir la app:
+
+### En Windows (PowerShell / CMD):
+```powershell
+git clone [https://github.com/LUISBENJUMEARIVERA/modulo1-knowledge-core.git](https://github.com/LUISBENJUMEARIVERA/modulo1-knowledge-core.git) && cd modulo1-knowledge-core && .\run.bat
+### en macOS y linux
+git clone [https://github.com/LUISBENJUMEARIVERA/modulo1-knowledge-core.git](https://github.com/LUISBENJUMEARIVERA/modulo1-knowledge-core.git) && cd modulo1-knowledge-core && chmod +x run.sh && ./run.sh
