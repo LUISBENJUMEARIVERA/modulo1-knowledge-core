@@ -1,5 +1,6 @@
 import asyncio
 import os
+
 from playwright.async_api import async_playwright
 from rich.console import Console
 from src.core.config import config
@@ -13,11 +14,15 @@ CURATED_TQ_URLS = [
     ("Canales y Sedes", "https://www.tqconfiable.com/contacto/"),
     ("Portal Principal", "https://www.tqconfiable.com"),
     ("Gente y Talento", "https://www.tqconfiable.com/asi-cambiamos-al-mundo/mundo/gente/"),
-    ("Comunidad y Sostenibilidad", "https://www.tqconfiable.com/asi-cambiamos-al-mundo/mundo/comunidad/"),
+    (
+        "Comunidad y Sostenibilidad",
+        "https://www.tqconfiable.com/asi-cambiamos-al-mundo/mundo/comunidad/",
+    ),
     ("División Farma e Historia", "https://www.tqfarma.com/quienes-somos"),
     ("Marcas y Portafolio", "https://www.tqfarma.com/nuestras-marcas"),
-    ("Salud Humana y Productos", "https://www.tqfarma.com/salud-humana")
+    ("Salud Humana y Productos", "https://www.tqfarma.com/salud-humana"),
 ]
+
 
 async def build_curated_knowledge_base():
     os.makedirs(config.output_raw_dir, exist_ok=True)
@@ -32,7 +37,9 @@ async def build_curated_knowledge_base():
         )
         page = await context.new_page()
 
-        console.print("[bold cyan]Extrayendo núcleos de información estratégicos de Tecnoquímicas...[/bold cyan]\n")
+        console.print(
+            "[bold cyan]Extrayendo núcleos de información estratégicos de Tecnoquímicas...[/bold cyan]\n"
+        )
 
         for section_title, url in CURATED_TQ_URLS:
             console.print(f"[yellow]Extrayendo:[/yellow] {section_title} -> {url}")
@@ -55,11 +62,14 @@ async def build_curated_knowledge_base():
         await browser.close()
 
     # Consolidar base de conocimiento
-    final_kb = "\n\n" + ("="*50 + "\n\n").join(extracted_sections)
+    final_kb = "\n\n" + ("=" * 50 + "\n\n").join(extracted_sections)
     with open(config.output_processed_file, "w", encoding="utf-8") as f:
         f.write(final_kb)
 
-    console.print(f"\n[bold green]Base de conocimiento consolidada con {len(extracted_sections)} fuentes en: {config.output_processed_file}[/bold green]")
+    console.print(
+        f"\n[bold green]Base de conocimiento consolidada con {len(extracted_sections)} fuentes en: {config.output_processed_file}[/bold green]"
+    )
+
 
 if __name__ == "__main__":
     asyncio.run(build_curated_knowledge_base())

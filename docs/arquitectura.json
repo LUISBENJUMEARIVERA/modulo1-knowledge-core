@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Módulo 1: Knowledge Core — Arquitectura de Runtime",
+    "output": "docs/arquitectura.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "users", "type": "external", "label": "Usuario / Analista TQ", "sublabel": "Navegador Web / CLI", "pos": [40, 260], "size": [140, 60] },
+    { "id": "ui", "type": "frontend", "label": "Streamlit App", "sublabel": "Dark UI :8501", "pos": [220, 160], "size": [140, 60] },
+    { "id": "benchmark", "type": "backend", "label": "Benchmark Runner", "sublabel": "Evaluador Semántico", "pos": [220, 360], "size": [140, 60] },
+    { "id": "service", "type": "backend", "label": "KnowledgeService", "sublabel": "Orquestador LCEL", "pos": [430, 260], "size": [150, 60] },
+    { "id": "prompts", "type": "backend", "label": "Prompts Engine", "sublabel": "SUMMARY / FAQ / QA", "pos": [430, 120], "size": [150, 60] },
+    { "id": "llm", "type": "backend", "label": "Ollama LLM", "sublabel": "llama3.2 :11434", "pos": [640, 120], "size": [140, 60] },
+    { "id": "kb", "type": "database", "label": "Knowledge Base", "sublabel": "knowledge_base.txt", "pos": [640, 260], "size": [150, 60] },
+    { "id": "extractor", "type": "backend", "label": "ResilientExtractor", "sublabel": "Trafilatura + BS4", "pos": [850, 260], "size": [150, 60] },
+    { "id": "crawler", "type": "backend", "label": "AsyncCrawler", "sublabel": "Playwright Chromium", "pos": [850, 400], "size": [150, 60] },
+    { "id": "rawdata", "type": "database", "label": "Raw Storage", "sublabel": "data/raw/*.html", "pos": [850, 520], "size": [150, 60] },
+    { "id": "portals", "type": "external", "label": "Portales TQ", "sublabel": "tqconfiable / tqfarma", "pos": [1070, 400], "size": [140, 60] }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Módulo 1: Knowledge Core (Entorno Local)",
+      "wraps": ["ui", "benchmark", "service", "prompts", "llm", "kb", "extractor", "crawler", "rawdata"]
+    },
+    {
+      "kind": "security-group",
+      "label": "Motor LCEL e Inferencia Soberana (Sin Fuga de Datos)",
+      "wraps": ["service", "prompts", "llm", "kb"]
+    }
+  ],
+  "connections": [
+    { "id": "users-to-ui", "from": "users", "to": "ui", "label": "Web HTTP", "variant": "emphasis" },
+    { "id": "users-to-bench", "from": "users", "to": "benchmark", "label": "CLI", "variant": "dashed" },
+    { "id": "ui-to-service", "from": "ui", "to": "service", "label": "Stream Tokens", "variant": "emphasis" },
+    { "id": "bench-to-service", "from": "benchmark", "to": "service", "label": "Evalúa QA" },
+    { "id": "service-to-prompts", "from": "service", "to": "prompts", "label": "Formatea" },
+    { "id": "prompts-to-llm", "from": "prompts", "to": "llm", "label": "Inferencia local", "variant": "security" },
+    { "id": "service-to-kb", "from": "service", "to": "kb", "label": "Carga contexto" },
+    { "id": "extractor-to-kb", "from": "extractor", "to": "kb", "label": "Escribe corpus" },
+    { "id": "crawler-to-extractor", "from": "crawler", "to": "extractor", "label": "HTML crudo" },
+    { "id": "crawler-to-rawdata", "from": "crawler", "to": "rawdata", "label": "Archiva snapshot", "variant": "dashed" },
+    { "id": "crawler-to-portals", "from": "crawler", "to": "portals", "label": "Scrape HTTPS", "variant": "emphasis" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Capa de Presentación",
+      "items": [
+        "Streamlit dashboard con estética farmacéutica Tecnoquímicas (Cold Slate, Cobalt Blue, Crimson Accent)",
+        "Streaming de tokens en tiempo real, chat persistente multi-sesión y visualización de benchmark"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Núcleo LCEL & Inferencia Soberana",
+      "items": [
+        "Pipelines componibles declarativos con ChatOllama (llama3.2)",
+        "Temperatura 0.1 con protocolo estricto de rechazo para garantizar 0% alucinaciones factuales",
+        "Benchmark runner con evaluación automatizada (100% de precisión validada)"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Ingesta Resiliente y Depuración",
+      "items": [
+        "Rastreo asíncrono con Playwright y Chromium headless",
+        "Extracción en dos fases: densidad de texto (Trafilatura) con fallback de heurística DOM (BeautifulSoup4)",
+        "Control estricto de dominios autorizados y exclusión de extensiones binarias"
+      ]
+    }
+  ]
+}

@@ -1,12 +1,39 @@
 # 🧬 Tecnoquímicas AI — Enterprise Web Scraper & Cognitive RAG Knowledge Studio
 
+[![CI](https://github.com/LUISBENJUMEARIVERA/scrapping/actions/workflows/ci.yml/badge.svg)](https://github.com/LUISBENJUMEARIVERA/scrapping/actions/workflows/ci.yml)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
-[![LangChain LCEL](https://img.shields.io/badge/orchestration-LangChain%20LCEL-1C3C3C.svg)](https://python.langchain.com/)
-[![Playwright](https://img.shields.io/badge/crawler-Playwright%20Async-2EAD33.svg)](https://playwright.dev/)
-[![Ollama](https://img.shields.io/badge/inference-Ollama%20llama3.2-black.svg)](https://ollama.com/)
-[![Streamlit UI](https://img.shields.io/badge/ui-Streamlit%20Dark-FF4B4B.svg)](https://streamlit.io/)
+[![Astral uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![Tests](https://img.shields.io/badge/tests-15%20passed%20(100%25)-success)](tests/)
+[![Architecture](https://img.shields.io/badge/architecture-Archify%20Interactive-blueviolet)](docs/arquitectura.html)
+[![SDD](https://img.shields.io/badge/specification-IEEE%201016%20SDD-002F6C)](docs/SDD.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 > **Language / Idioma:** **English (Default)** | [🇪🇸 Leer en Español](#-versión-en-español)
+
+---
+
+## 🗺️ System Architecture (Interactive Archify Map)
+
+Interactive, standalone runtime architecture map generated with **Archify**. Open it in your browser: [`docs/arquitectura.html`](docs/arquitectura.html).
+
+[![Arquitectura del Proyecto (Tema Oscuro)](docs/arquitectura.visual-check.2048x1320.dark.png)](docs/arquitectura.html)
+
+*Features: Pan & Zoom, Dark/Light theme toggle, live relationship tracing, search, guided views, and full visual check compliance.*
+
+---
+
+## 📑 Software Design Description (SDD)
+
+The full technical specification adhering to **IEEE 1016-2009** is available at:
+👉 **[Software Design Description (SDD) — docs/SDD.md](docs/SDD.md)**
+
+It covers:
+- System boundaries, C4 container & component decompositions.
+- Resilient ingestion protocols (Playwright headless Chromium + dual-stage Trafilatura/BS4 extraction).
+- Sovereign inference with Ollama (`llama3.2`) and LCEL negative coercion guardrails (0% hallucinations).
+- Pharmaceutical Streamlit UI design specifications and 100% benchmark evaluation metrics.
 
 ---
 
@@ -27,7 +54,7 @@ An enterprise-grade, resilient web crawling, semantic extraction, and grounded Q
   - Gemini-style fixed height message container (`height=425`) with internal scrollbar.
   - Auto-rotating dynamic image carousel (every 3.8s) featuring flagship TQ products and certified manufacturing facilities.
   - Multi-session chat thread manager with state persistence across tabs.
-* **Benchmark & Evaluation Harness:** Automated testing framework auditing 20 test cases (*In-Scope*, *Complex Cross-Domain*, and *Adversarial Out-of-Scope*).
+* **Benchmark & Evaluation Harness:** Automated testing framework auditing 20 test cases (*In-Scope*, *Complex Cross-Domain*, and *Adversarial Out-of-Scope*) achieving a validated 100% score.
 
 ---
 
@@ -47,32 +74,66 @@ git clone https://github.com/LUISBENJUMEARIVERA/scrapping.git && cd scrapping &&
 
 ---
 
+### 🛠️ Developer Interface (`Makefile`)
+
+The repository includes a comprehensive `Makefile` implementing the **Jan Project Standard**:
+
+```bash
+make help               # Display list of all available commands
+make install            # Install and sync dependencies with uv
+make dev                # Set up local dev environment (uv sync + pre-commit install)
+make lint               # Run Ruff linter
+make format             # Autoformat code with Ruff
+make test               # Run the complete test suite with Pytest
+make check              # Complete gate verification (lint + format-check + pytest)
+make pre-commit         # Run all pre-commit hooks manually on all files
+```
+
+---
+
 ### 📂 Repository Structure
 
 ```text
 scrapping/
-├── .agents/
-│   └── skills/
-│       └── frontend-design/      # Anthropic official frontend design skill
+├── .github/                      # GitHub governance (CI, Dependabot, PR/Issue templates, labels)
+│   ├── ISSUE_TEMPLATE/           # Declarative Bug, Feature, and Spike issue forms
+│   ├── workflows/                # GitHub Actions CI workflow
+│   ├── dependabot.yml            # Automated dependency updates for uv & Actions
+│   ├── labels.yml                # Declarative labels catalog
+│   └── pull_request_template.md  # Standardized Pull Request template
 ├── app/
 │   └── main.py                   # High-end pharmaceutical dark-mode Streamlit UI
 ├── data/
-│   ├── processed/                # Normalized semantic knowledge corpus
+│   ├── evaluation/               # Benchmark test questions and audit results (100% score)
+│   ├── processed/                # Normalized semantic knowledge corpus (knowledge_base.txt)
 │   └── raw/                      # Extracted raw HTML/Text payloads
+├── docs/
+│   ├── SDD.md                    # Software Design Description (IEEE 1016)
+│   ├── technical_report.md       # Technical implementation report
+│   ├── arquitectura.json         # Archify architecture source model
+│   ├── arquitectura.html         # Interactive standalone architecture diagram
+│   └── arquitectura.visual-check # Visual check screenshots and browser validation
 ├── src/
 │   ├── chains/
 │   │   ├── prompts.py            # LangChain LCEL prompts with negative coercion
 │   │   └── tasks.py              # Knowledge streaming service
 │   ├── core/
-│   │   ├── benchmark_runner.py   # 20-case automated evaluation suite
+│   │   ├── benchmark_runner.py   # Automated 20-case evaluation suite
 │   │   ├── config.py             # Domain policies, depth, and crawler configuration
 │   │   └── llm_factory.py        # Ollama llama3.2 connector
-│   └── ingestion/
-│       ├── crawler.py            # Playwright async crawler
-│       └── extractor.py          # Trafilatura agnostic heuristic extractor
-├── pyproject.toml                # Dependencies managed by Astral uv
-├── run.bat                       # Windows one-click launcher
-└── run.sh                        # Linux / macOS launcher
+│   ├── ingestion/
+│   │   ├── crawler.py            # Playwright async crawler
+│   │   └── extractor.py          # Trafilatura agnostic heuristic extractor
+│   └── modulo1_knowledge_core/   # Python package entry point
+├── tests/                        # Full unit test suite with pytest (15 passing tests)
+├── CONSTITUTION.md               # Central project constitution & single source of truth
+├── CONTRIBUTING.md               # Contributor guide & PR process
+├── CODE_OF_CONDUCT.md            # Contributor Covenant 2.1 code of conduct
+├── LICENSE                       # MIT License
+├── Makefile                      # Task automation (check, test, lint, format)
+├── pyproject.toml                # Project metadata, dependencies & tool configs (uv)
+├── uv.lock                       # Deterministic versioned lockfile
+└── .pre-commit-config.yaml       # Pre-commit quality hooks (Ruff, uv-lock, hygiene)
 ```
 
 ---
@@ -98,7 +159,7 @@ Sistema empresarial de ingesta web resiliente, modelado semántico y arquitectur
   - Contenedor de chat tipo Gemini (`height=425`) con scroll interno.
   - Carrusel automático de imágenes (cada 3.8s) con marcas insignias y complejos industriales TQ.
   - Gestor multi-sesión de conversaciones con persistencia entre pestañas.
-* **Evaluación Sistemática:** Arnés de pruebas automatizado con una matriz de 20 casos (*In-Scope*, *Complex Semantic* y *Out-of-Scope Adversarial*).
+* **Evaluación Sistemática:** Arnés de pruebas automatizado con una matriz de 20 casos (*In-Scope*, *Complex Semantic* y *Out-of-Scope Adversarial*) con 100% de efectividad.
 
 ---
 
@@ -121,3 +182,10 @@ git clone https://github.com/LUISBENJUMEARIVERA/scrapping.git && cd scrapping &&
 * [TQ Farma (Línea Médica Especializada)](https://www.tqfarma.com)
 * [Catálogo de Marcas TQ](https://www.tqconfiable.com/marcas)
 * [BR Solutions Group](https://brgrupodesoluciones.com)
+
+---
+
+### 📄 Licencia y Constitución
+
+- Licencia: [MIT](LICENSE) © 2026 Luis Benjumea.
+- Fuente única de verdad del proyecto: [`CONSTITUTION.md`](CONSTITUTION.md).

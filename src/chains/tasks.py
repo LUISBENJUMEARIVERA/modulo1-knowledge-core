@@ -1,8 +1,10 @@
 import os
+
 from langchain_core.output_parsers import StrOutputParser
+from src.chains.prompts import FAQ_PROMPT, QA_PROMPT, SUMMARY_PROMPT
 from src.core.config import config
 from src.core.llm_factory import get_llm
-from src.chains.prompts import SUMMARY_PROMPT, FAQ_PROMPT, QA_PROMPT
+
 
 class KnowledgeService:
     def __init__(self):
@@ -12,7 +14,7 @@ class KnowledgeService:
     def _load_context(self) -> str:
         if not os.path.exists(config.output_processed_file):
             return "No hay datos disponibles en la base de conocimiento."
-        with open(config.output_processed_file, "r", encoding="utf-8") as f:
+        with open(config.output_processed_file, encoding="utf-8") as f:
             return f.read().strip()
 
     def get_summary_stream(self):
@@ -26,6 +28,7 @@ class KnowledgeService:
     def answer_question_stream(self, question: str):
         chain = QA_PROMPT | self.llm | StrOutputParser()
         return chain.stream({"context": self.context, "question": question})
+
 
 # Instancia singleton para reutilizar
 service = KnowledgeService()

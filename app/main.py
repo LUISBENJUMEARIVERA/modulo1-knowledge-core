@@ -18,7 +18,7 @@ st.set_page_config(
     page_title="Tecnoquímicas AI — Núcleo de Inteligencia",
     page_icon="🧬",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 # -----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ if "conversations" not in st.session_state:
         "Consulta Principal": [
             {
                 "role": "assistant",
-                "content": "Bienvenido al Núcleo de Inteligencia de **Tecnoquímicas S.A.** Respondo inquietudes basándome exclusivamente en la base documental auditada de la empresa (plantas, marcas de consumo masivo, línea médica y certificaciones). ¿Qué información requieres verificar?"
+                "content": "Bienvenido al Núcleo de Inteligencia de **Tecnoquímicas S.A.** Respondo inquietudes basándome exclusivamente en la base documental auditada de la empresa (plantas, marcas de consumo masivo, línea médica y certificaciones). ¿Qué información requieres verificar?",
             }
         ]
     }
@@ -38,7 +38,7 @@ if "current_chat_id" not in st.session_state:
     st.session_state.current_chat_id = "Consulta Principal"
 
 if st.session_state.current_chat_id not in st.session_state.conversations:
-    st.session_state.current_chat_id = list(st.session_state.conversations.keys())[0]
+    st.session_state.current_chat_id = next(iter(st.session_state.conversations.keys()))
 
 if "executive_summary_content" not in st.session_state:
     st.session_state.executive_summary_content = None
@@ -49,7 +49,8 @@ if "faq_content" not in st.session_state:
 # -----------------------------------------------------------------------------
 # DESIGN SYSTEM: DARK MODE NATIVO TECNOQUÍMICAS & ALINEACIÓN PRECISA
 # -----------------------------------------------------------------------------
-st.markdown("""
+st.markdown(
+    """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
 
@@ -469,25 +470,30 @@ div[data-testid="stVerticalBlockBorderWrapper"]:has(div[data-testid="stChatMessa
     box-shadow: 0 2px 8px rgba(0, 168, 150, 0.2) !important;
 }
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 # -----------------------------------------------------------------------------
 # SIDEBAR: ALINEADO ARRIBA AL NIVEL EXACTO DEL HERO SECTION
 # -----------------------------------------------------------------------------
 with st.sidebar:
-    st.markdown("""
+    st.markdown(
+        """
     <div class="tq-sidebar-head">
         <h2>Tecnoquímicas S.A.</h2>
         <p>Núcleo Semántico Corporativo</p>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     if st.button("✨ Nueva consulta", use_container_width=True):
         new_id = f"Consulta #{len(st.session_state.conversations) + 1}"
         st.session_state.conversations[new_id] = [
             {
                 "role": "assistant",
-                "content": f"Nueva sesión iniciada (**{new_id}**). ¿Qué consulta deseas formular sobre el portafolio de Tecnoquímicas?"
+                "content": f"Nueva sesión iniciada (**{new_id}**). ¿Qué consulta deseas formular sobre el portafolio de Tecnoquímicas?",
             }
         ]
         st.session_state.current_chat_id = new_id
@@ -498,18 +504,21 @@ with st.sidebar:
         "Seleccionar conversación activa:",
         options=chat_names,
         index=chat_names.index(st.session_state.current_chat_id),
-        label_visibility="collapsed"
+        label_visibility="collapsed",
     )
     if selected_chat != st.session_state.current_chat_id:
         st.session_state.current_chat_id = selected_chat
         st.rerun()
 
-    st.caption(f"Conversación activa: **{len(st.session_state.conversations[st.session_state.current_chat_id])}** mensajes.")
+    st.caption(
+        f"Conversación activa: **{len(st.session_state.conversations[st.session_state.current_chat_id])}** mensajes."
+    )
 
     context_length = len(service.context) if service.context else 0
     words_approx = len(service.context.split()) if service.context else 0
 
-    st.markdown(f"""
+    st.markdown(
+        f"""
     <div class="tq-metric-tile">
         <div class="tq-metric-label">
             <span>Base Semántica Indexada</span>
@@ -527,9 +536,12 @@ with st.sidebar:
         <div class="tq-metric-number">{config.llm_model}</div>
         <div class="tq-metric-sub">Restricción anti-alucinaciones</div>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
-    st.markdown("""
+    st.markdown(
+        """
     <div class="tq-sidebar-links">
         <a href="https://www.tqconfiable.com" target="_blank" class="tq-source-link">
             <span>TQ Confiable (Corporativo)</span>
@@ -548,12 +560,15 @@ with st.sidebar:
             <span style="color: #00C49F;">⚡</span>
         </a>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 # -----------------------------------------------------------------------------
 # HERO SECTION COMPACTA
 # -----------------------------------------------------------------------------
-st.markdown("""
+st.markdown(
+    """
 <div class="tq-hero">
     <div class="tq-hero-info">
         <div class="tq-status-badge">
@@ -579,16 +594,16 @@ st.markdown("""
         </a>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 # -----------------------------------------------------------------------------
 # PESTAÑAS PRINCIPALES DE TRABAJO (3 TAREAS REQUERIDAS)
 # -----------------------------------------------------------------------------
-tab_qa, tab_summary, tab_faq = st.tabs([
-    "💬 Asistente Q&A Grounded",
-    "📑 Resumen Ejecutivo",
-    "❓ Preguntas Frecuentes"
-])
+tab_qa, tab_summary, tab_faq = st.tabs(
+    ["💬 Asistente Q&A Grounded", "📑 Resumen Ejecutivo", "❓ Preguntas Frecuentes"]
+)
 
 # -----------------------------------------------------------------------------
 # 1. PESTAÑA Q&A: LAYOUT 50/50 ALINEADO EXACTO CON LA PARTE INFERIOR DEL INPUT
@@ -598,7 +613,8 @@ with tab_qa:
 
     # MITAD IZQUIERDA: BLOQUE HEADER + VENTANA DE MENSAJES + INPUT TEXTUAL
     with col_chat:
-        st.markdown(f"""
+        st.markdown(
+            f"""
         <div class="tq-chat-header-bar">
             <div>
                 <h3>Asistente de Consulta Grounded</h3>
@@ -610,7 +626,9 @@ with tab_qa:
                 Cero Alucinaciones
             </span>
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
         active_messages = st.session_state.conversations[st.session_state.current_chat_id]
 
@@ -868,9 +886,9 @@ with tab_qa:
             function showSlide(index) {
                 slides[currentIndex].classList.remove('active');
                 dots[currentIndex].classList.remove('active');
-                
+
                 currentIndex = (index + slides.length) % slides.length;
-                
+
                 slides[currentIndex].classList.add('active');
                 dots[currentIndex].classList.add('active');
                 linkText.innerText = linkData[currentIndex].text;
@@ -900,18 +918,23 @@ with tab_qa:
 # 2. PESTAÑA DE RESUMEN EJECUTIVO (RENDERIZADO NATIVO MARKDOWN)
 # -----------------------------------------------------------------------------
 with tab_summary:
-    st.markdown("""
+    st.markdown(
+        """
     <div class="tq-panel">
         <h3>Síntesis Ejecutiva de Tecnoquímicas S.A.</h3>
         <p>
             Genera un informe condensado sobre la trayectoria, capacidad manufacturera y marcas insignia a partir del corpus extraído de los portales de TQ.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     col_btn_sum, _ = st.columns([1, 3])
     with col_btn_sum:
-        btn_sum = st.button("⚡ Generar síntesis ejecutiva", key="btn_summary_exec", use_container_width=True)
+        btn_sum = st.button(
+            "⚡ Generar síntesis ejecutiva", key="btn_summary_exec", use_container_width=True
+        )
 
     if btn_sum:
         with st.spinner("Procesando síntesis corporativa con LangChain y Ollama..."):
@@ -924,24 +947,29 @@ with tab_summary:
     if st.session_state.executive_summary_content:
         st.markdown('<div class="tq-markdown-container">', unsafe_allow_html=True)
         st.markdown(st.session_state.executive_summary_content)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
 # 3. PESTAÑA DE PREGUNTAS FRECUENTES (RENDERIZADO NATIVO MARKDOWN)
 # -----------------------------------------------------------------------------
 with tab_faq:
-    st.markdown("""
+    st.markdown(
+        """
     <div class="tq-panel">
         <h3>Preguntas Frecuentes Automatizadas</h3>
         <p>
             Extracción estructurada de inquietudes frecuentes sobre laboratorios, plantas, distribución comercial y certificaciones Invima.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     col_btn_faq, _ = st.columns([1, 3])
     with col_btn_faq:
-        btn_faq = st.button("🔍 Extraer preguntas frecuentes", key="btn_faq_exec", use_container_width=True)
+        btn_faq = st.button(
+            "🔍 Extraer preguntas frecuentes", key="btn_faq_exec", use_container_width=True
+        )
 
     if btn_faq:
         with st.spinner("Extrayendo preguntas y respuestas frecuentes del corpus..."):
@@ -954,4 +982,4 @@ with tab_faq:
     if st.session_state.faq_content:
         st.markdown('<div class="tq-markdown-container">', unsafe_allow_html=True)
         st.markdown(st.session_state.faq_content)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
