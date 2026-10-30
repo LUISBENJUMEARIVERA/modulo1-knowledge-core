@@ -1,0 +1,25 @@
+{
+  "stages": [
+    "Descubrir",
+    "Extraer",
+    "Limpiar",
+    "Deduplicar",
+    "Enriquecer"
+  ],
+  "total_urls_target": 8,
+  "total_pages_scraped": 6,
+  "total_tokens": 2551,
+  "total_characters": 12853,
+  "total_raw_bytes": 858660,
+  "total_clean_bytes": 13591,
+  "noise_discarded_bytes": 845069,
+  "noise_reduction_ratio_pct": 98.4,
+  "discarded_duplicates": 2,
+  "unique_documents": 6,
+  "last_crawled_at": "2026-10-30T23:56:08.111572+00:00",
+  "storage_layers": {
+    "bronze": "data/raw",
+    "silver": "data/processed/knowledge_base.txt",
+    "gold": "data/gold/corpus.jsonl"
+  }
+}
