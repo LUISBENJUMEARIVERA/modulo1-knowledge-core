@@ -42,8 +42,8 @@ Proveer a Tecnoquímicas S.A. de un núcleo soberano, reproducible y auditable d
 
 - **Rastreo Web Asíncrono:** Crawling de portales oficiales (`tqconfiable.com`, `tqfarma.com`) con Playwright Chromium y control de profundidad.
 - **Extracción Resiliente:** Limpieza semántica de HTML con `trafilatura` y fallback heurístico con `BeautifulSoup4`.
-- **Persistencia de Datos:** Almacenamiento crudo en `data/raw/` y corpus normalizado en `data/processed/knowledge_base.txt`.
-- **Cadenas LCEL:** Resumen Ejecutivo Corporativo (`SUMMARY_PROMPT`), Generación de 5 FAQs operativas (`FAQ_PROMPT`) y Motor Q&A con rechazo calibrado (`QA_PROMPT`).
+- **Persistencia de Datos Medallion:** Almacenamiento en tres capas (Bronze en `data/raw/`, Silver en `data/processed/` y Gold estructurado en `data/gold/corpus.jsonl` con metadatos: URL, título, fecha, hash SHA-256 y tokens, además de `metrics.json`).
+- **Cadenas LCEL:** Resumen Ejecutivo Corporativo (`SUMMARY_PROMPT`), Generación de 5 FAQs operativas (`FAQ_PROMPT`) y Motor Q&A con rechazo calibrado y cita verificada de fuentes (`QA_PROMPT`).
 - **Interfaz Streamlit:** Dashboard farmacéutico grado producción (Cold Slate, Cobalt Blue `#002F6C`, Crimson Accent `#D32F2F`) con streaming reactivo de tokens.
 - **Aseguramiento de Calidad:** Benchmark evaluativo con métricas cuantitativas (`data/evaluation/benchmark_results.md`) y suite de pruebas unitarias (`pytest`).
 - **Arquitectura Viva:** Especificación formal del sistema en `docs/SDD.md` y diagrama interactivo Archify en `docs/arquitectura.html`.

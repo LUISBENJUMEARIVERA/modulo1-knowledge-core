@@ -19,7 +19,7 @@ El presente documento de especificación de diseño de software (SDD) describe l
 El Módulo 1 aborda:
 1. **Rastreo Web Resiliente y Asíncrono:** Crawling de portales institucionales de Tecnoquímicas (`tqconfiable.com`, `tqfarma.com`) empleando Playwright y Chromium headless con evasión de bloqueos dinámicos.
 2. **Extracción y Depuración Heurística:** Procesamiento semántico de contenido HTML eliminando ruido estructural (scripts, estilos, navegación, banners publicitarios) con `trafilatura` y fallback mediante `BeautifulSoup4`.
-3. **Persistencia Estructurada:** Generación de un corpus consolidado y auditable en `data/processed/knowledge_base.txt`.
+3. **Persistencia Estructurada Medallion:** Almacenamiento en tres capas formales: Bronze (`data/raw/`), Silver (`data/processed/`) y Gold (`data/gold/corpus.jsonl` con metadatos de URL, título, timestamp, hash SHA-256 y conteo de tokens, junto a `metrics.json`).
 4. **Orquestación de Inferencia LCEL:** Implementación de cadenas componibles y reactivas para (a) Resumen Ejecutivo Corporativo, (b) Generación de FAQs operativas y (c) Motor de Preguntas y Respuestas (Q&A) con protocolo de rechazo calibrado frente a preguntas fuera de dominio (Out-of-Scope).
 5. **Interfaz de Usuario de Alto Impacto:** Dashboard interactivo en Streamlit con diseño visual farmacéutico (Cold Slate, Azul Cobalto `#002F6C`, Carmesí `#D32F2F`) y capacidades de streaming en tiempo real.
 6. **Módulo de Benchmark y Aseguramiento de Calidad:** Suite automatizada de evaluación cuantitativa contra preguntas cerradas, semánticas y fuera de alcance, respaldada por un conjunto integral de pruebas unitarias (`pytest`).
@@ -73,9 +73,10 @@ graph TD
             Service -->|Invocación Streaming| LLMFactory[LLM Factory - src.core.llm_factory]
         end
 
-        subgraph Storage [Almacenamiento Local]
-            RawStorage[(data/raw/*.html)]
-            KBFile
+        subgraph Storage [Almacenamiento Local Medallion]
+            RawStorage[(Capa Bronze: data/raw/*.html)]
+            KBFile[(Capa Silver: data/processed/*.txt)]
+            GoldStorage[(Capa Gold: data/gold/corpus.jsonl & metrics.json)]
             BenchData[(data/evaluation/test_questions.json)]
         end
     end
