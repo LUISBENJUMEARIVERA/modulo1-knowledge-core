@@ -85,6 +85,8 @@ make dev                # Set up local dev environment (uv sync + pre-commit ins
 make lint               # Run Ruff linter
 make format             # Autoformat code with Ruff
 make test               # Run the complete test suite with Pytest
+make scrape             # Run Medallion scraping pipeline (Bronze -> Silver -> Gold)
+make app                # Launch pharmaceutical Streamlit interface
 make check              # Complete gate verification (lint + format-check + pytest)
 make pre-commit         # Run all pre-commit hooks manually on all files
 ```
@@ -105,8 +107,9 @@ scrapping/
 │   └── main.py                   # High-end pharmaceutical dark-mode Streamlit UI
 ├── data/
 │   ├── evaluation/               # Benchmark test questions and audit results (100% score)
-│   ├── processed/                # Normalized semantic knowledge corpus (knowledge_base.txt)
-│   └── raw/                      # Extracted raw HTML/Text payloads
+│   ├── gold/                     # Structured JSONL corpus (URL, title, hash SHA-256) & metrics.json
+│   ├── processed/                # Normalized Silver knowledge corpus
+│   └── raw/                      # Raw Bronze HTML payloads (Playwright snapshots)
 ├── docs/
 │   ├── SDD.md                    # Software Design Description (IEEE 1016)
 │   ├── technical_report.md       # Technical implementation report
@@ -152,11 +155,14 @@ Sistema empresarial de ingesta web resiliente, modelado semántico y arquitectur
 * **Orquestación Declarativa:** Pipelines tipados con **LangChain LCEL** cubriendo tres tareas esenciales:
   1. *Resumen Corporativo Ejecutivo.*
   2. *Preguntas Frecuentes (FAQ) Dinámicas.*
-  3. *Asistente Q&A Grounded con Coerción Negativa Estricta.*
+  3. *Asistente Q&A Grounded con Coerción Negativa Estricta y Cita Obligatoria de Fuentes.*
 * **Inferencia Local:** Modelo open-source `llama3.2` vía **Ollama**, asegurando privacidad y latencias mínimas.
 * **Interfaz de Grado Farmacéutico (Dark Mode):** Dashboard interactivo en **Streamlit** aplicando la skill oficial de Anthropic `frontend-design`:
+  - Panel interactivo del Pipeline Medallion con las 5 etapas: *Descubrir → Extraer → Limpiar → Deduplicar → Enriquecer*.
+  - Indicadores clave de desempeño: URLs objetivo, páginas rastreadas, tokens del corpus y volumen de descartes de ruido.
+  - Auditor de documentos Gold con visualización de hashes SHA-256 y conteo de tokens.
   - Distribución simétrica 50/50 con alineación milimétrica con la barra de entrada.
-  - Contenedor de chat tipo Gemini (`height=425`) con scroll interno.
+  - Contenedor de chat tipo Gemini (`height=425`) con scroll interno y cita formal de fuentes (`📌 Fuente: URL`).
   - Carrusel automático de imágenes (cada 3.8s) con marcas insignias y complejos industriales TQ.
   - Gestor multi-sesión de conversaciones con persistencia entre pestañas.
 * **Evaluación Sistemática:** Arnés de pruebas automatizado con una matriz de 20 casos (*In-Scope*, *Complex Semantic* y *Out-of-Scope Adversarial*) con 100% de efectividad.

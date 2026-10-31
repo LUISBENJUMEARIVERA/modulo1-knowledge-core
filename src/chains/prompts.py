@@ -47,7 +47,9 @@ QA_PROMPT = ChatPromptTemplate.from_messages(
             "datos financieros de hace décadas, opiniones sobre marcas competidoras ajenas como Bayer, "
             "o información de comercios externos), responde exactamente:\n"
             "'Lo siento, la información oficial disponible en el sistema no contiene datos para responder a esta consulta.'\n"
-            "4. No inventes información externa que no esté respaldada en el texto.",
+            "4. No inventes información externa que no esté respaldada en el texto.\n"
+            "5. En cada respuesta factual afirmativa, incluye obligatoriamente al final la fuente oficial consultada en este formato: "
+            "'📌 Fuente: [Título o URL correspondiente]'.",
         ),
         ("user", "{question}"),
     ]
