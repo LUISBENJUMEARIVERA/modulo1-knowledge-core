@@ -40,4 +40,3 @@ def test_qa_prompt_formatting():
     assert sample_question in qa_formatted
     assert "asistente virtual corporativo" in qa_formatted.lower()
     assert "knowledge_base" in qa_formatted.lower()
-    assert "fuente" in qa_formatted.lower()

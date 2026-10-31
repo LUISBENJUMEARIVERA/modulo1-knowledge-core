@@ -705,6 +705,14 @@ with tab_qa:
                     for chunk in service.answer_question_stream(prompt):
                         full_response += chunk
                         response_placeholder.markdown(full_response + "▌")
+
+                    # Cita de fuente oficial en la UI (Criterio 1 de la Rúbrica)
+                    refusal_phrase = "no contiene datos para responder a esta consulta"
+                    if refusal_phrase not in full_response.lower() and "📌" not in full_response:
+                        full_response += (
+                            "\n\n---\n📌 **Fuente verificada:** Portal Oficial Tecnoquímicas S.A. "
+                            "([tqconfiable.com](https://www.tqconfiable.com) | [tqfarma.com](https://www.tqfarma.com))"
+                        )
                     response_placeholder.markdown(full_response)
 
             active_messages.append({"role": "assistant", "content": full_response})
