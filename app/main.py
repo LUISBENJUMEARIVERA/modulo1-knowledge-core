@@ -546,6 +546,9 @@ with st.sidebar:
         <div style="font-size:0.72rem; color:#CBD5E1; margin-top:5px; font-weight:600; line-height:1.4;">
             Descubrir ➔ Extraer ➔ Limpiar ➔ Deduplicar ➔ Enriquecer
         </div>
+        <div style="font-size:0.67rem; color:#00C49F; margin-top:4px; font-weight:600;">
+            🕷️ Playwright Chromium + 🧬 Trafilatura + 🍲 BS4
+        </div>
     </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px;">
@@ -1071,6 +1074,24 @@ with tab_tests:
             </div>
             <div style="background:rgba(0,196,159,0.15); border:1px solid #00C49F; border-radius:16px; padding:4px 12px; font-size:0.75rem; color:#00C49F; font-weight:700;">
                 CI/CD Gate: APROBADO
+            </div>
+        </div>
+
+        <div style="margin-top:12px; padding:10px 14px; background:rgba(0, 47, 108, 0.25); border:1px solid #1B3658; border-radius:8px; display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
+            <div style="font-size:0.75rem; font-weight:700; color:#00C49F; text-transform:uppercase; letter-spacing:0.5px;">
+                ⚙️ Stack de Web Scraping:
+            </div>
+            <div style="font-size:0.78rem; color:#F8FAFC;">
+                🕷️ <strong>Playwright Chromium:</strong> Ingesta asíncrona headless (SPA & JS Hydration)
+            </div>
+            <div style="font-size:0.78rem; color:#F8FAFC;">
+                🧬 <strong>Trafilatura:</strong> Extracción heurística por densidad textual (Self-healing)
+            </div>
+            <div style="font-size:0.78rem; color:#F8FAFC;">
+                🍲 <strong>BeautifulSoup4:</strong> Fallback para tablas y marcado HTML
+            </div>
+            <div style="font-size:0.78rem; color:#F8FAFC;">
+                🤖 <strong>Robots.txt & Rate Limit:</strong> Delays de 1200ms y User-Agent institucional
             </div>
         </div>
     </div>
